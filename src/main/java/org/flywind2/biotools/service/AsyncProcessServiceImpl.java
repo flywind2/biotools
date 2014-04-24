@@ -6,7 +6,7 @@ package org.flywind2.biotools.service;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import org.flywind2.model.messages.JdMessage;
+import org.flywind2.biotools.model.messages.JdMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.EnableAsync;

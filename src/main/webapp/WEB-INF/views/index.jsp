@@ -15,5 +15,8 @@
 <br/>
 <br/>
 <a href="message/msgs">Go to the message list</a>
+<br/>
+<br/>
+<a href="gene/gene">Gene Query</a>
 </body>
 </html>

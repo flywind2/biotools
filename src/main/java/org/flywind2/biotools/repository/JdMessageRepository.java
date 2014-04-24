@@ -3,7 +3,7 @@
  */
 package org.flywind2.biotools.repository;
 
-import org.flywind2.model.messages.JdMessage;
+import org.flywind2.biotools.model.messages.JdMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

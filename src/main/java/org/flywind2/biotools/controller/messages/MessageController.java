@@ -5,10 +5,10 @@ package org.flywind2.biotools.controller.messages;
 
 import java.util.List;
 
+import org.flywind2.biotools.model.messages.JdMessage;
 import org.flywind2.biotools.repository.JdMessageRepository;
 import org.flywind2.biotools.repository.JdResponseRepository;
 import org.flywind2.biotools.service.AsyncProcessService;
-import org.flywind2.model.messages.JdMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +47,11 @@ public class MessageController {
 	 */
 	@RequestMapping(value={"**"})
 	public String list(Model model){
-		log.info("find All 1");
+		//log.info("find All 1");
 		List<JdMessage> list = jdMessageRepository.findAll();
 		model.addAttribute("messages", list);
-		asyncService.processNotifications(list);
-		log.info("process finished !");
+		//asyncService.processNotifications(list);
+		//log.info("process finished !");
 		return "message/message";
 	}
 	
@@ -81,16 +81,19 @@ public class MessageController {
 	public String add(@ModelAttribute JdMessage jdMessage){
 		log.info("do new message");
 		jdMessageRepository.save(jdMessage);
+		
+		log.info("added message's id is "+ jdMessage.getMessageId());
+		
 		return "redirect:/message/";
 	}
 	
 	
 	/**
-	 * ��ʾmessage��ʾ��Ϣ
+	 * show/{messageId}
 	 * @param messageId
 	 * @return 
 	 */
-	@RequestMapping(value="show/{messageId}",method=RequestMethod.GET)
+	@RequestMapping(value="show/{messageId:[\\d]+}",method=RequestMethod.GET)
 	public String detail(Model model,@PathVariable(value="messageId") Long messageId ){
 		log.info("show message " + messageId);
 		JdMessage message = jdMessageRepository.findOne(messageId);
@@ -103,14 +106,14 @@ public class MessageController {
 	 * @param messageId
 	 * @return 
 	 */
-	@RequestMapping(value="delete/{messageId}",method=RequestMethod.GET)
+	@RequestMapping(value="delete/{messageId:[\\d]+}",method=RequestMethod.GET)
 	public String delete(@PathVariable(value="messageId") Long messageId ){
 		
 		jdMessageRepository.delete(messageId);
 		return "redirect:/message/";
 	}
 	
-	@RequestMapping(method=RequestMethod.GET,value="update/{messageId}")
+	@RequestMapping(method=RequestMethod.GET,value="update/{messageId:[\\d]+}")
 	public String update(Model model,@PathVariable(value="messageId") Long messageId){
 		//@PathVariable(value="messageId") Long messageId
 		JdMessage message =jdMessageRepository.findOne(messageId);
@@ -119,7 +122,7 @@ public class MessageController {
 		return "message/update";
 	}
 	
-	@RequestMapping(method=RequestMethod.POST,value="update/{messageId}")
+	@RequestMapping(method=RequestMethod.POST,value="update/{messageId:[\\d]+}")
 	public String update(@ModelAttribute JdMessage jdMessage,@PathVariable(value="messageId") Long messageId){
 		//@PathVariable(value="messageId") Long messageId
 		jdMessageRepository.saveAndFlush(jdMessage);
